@@ -12,9 +12,9 @@ const messageSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Sender ID is required'],
     },
-    content: {
+    text: {
       type: String,
-      required: [true, 'Announcement content cannot be empty'],
+      required: [true, 'Announcement text is required'],
       trim: true,
     },
   },
