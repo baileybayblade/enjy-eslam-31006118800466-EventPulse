@@ -8,41 +8,40 @@ const asyncHandler = require('../utils/asyncHandler');
 exports.getEvents = asyncHandler(async (req, res, next) => {
   const { category, city, startDate, endDate, search, sort, page, limit } = req.query;
 
-  let query = {};
+  // build combined filter object
+  const filter = {};
 
-  // text search
+  if (category) filter.category = category;
+  if (city) filter.city = city;
+
+  if (startDate || endDate) {
+    filter.date = {};
+    if (startDate) filter.date.$gte = new Date(startDate);
+    if (endDate)   filter.date.$lte = new Date(endDate);
+  }
+
+  // search query
   if (search) {
-    query.$or = [
+    filter.$or = [
       { title: { $regex: search, $options: 'i' } },
       { description: { $regex: search, $options: 'i' } },
     ];
   }
 
-  // category & city filters
-  if (category) query.category = category;
-  if (city) query.city = { $regex: city, $options: 'i' };
-
-  // date range filter
-  if (startDate || endDate) {
-    query.date = {};
-    if (startDate) query.date.$gte = new Date(startDate);
-    if (endDate) query.date.$lte = new Date(endDate);
-  }
-
-  // Sorting
+  // sorting
   let sortOption = { createdAt: -1 };
   if (sort === 'date') sortOption = { date: 1 };
   else if (sort === '-date') sortOption = { date: -1 };
   else if (sort === 'popularity') sortOption = { registeredCount: -1 };
 
-  // Pagination
+  // pagination
   const pageNum = parseInt(page, 10) || 1;
   const limitNum = parseInt(limit, 10) || 10;
   const startIndex = (pageNum - 1) * limitNum;
 
-  const total = await Event.countDocuments(query);
+  const total = await Event.countDocuments(filter);
 
-  const events = await Event.find(query)
+  const events = await Event.find(filter)
     .populate('category', 'name')
     .populate('organizer', 'name email')
     .sort(sortOption)
