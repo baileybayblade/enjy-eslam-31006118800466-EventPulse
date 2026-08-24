@@ -6,11 +6,10 @@ const asyncHandler = require('../utils/asyncHandler');
 // @route   GET /api/events
 // @access  public
 exports.getEvents = asyncHandler(async (req, res, next) => {
-  const { category, city, startDate, endDate, search, sort, page, limit } = req.query;
+  const { category, city, startDate, endDate, search, sortBy, order, page, limit } = req.query;
 
-  // build combined filter object
+  // filtering
   const filter = {};
-
   if (category) filter.category = category;
   if (city) filter.city = city;
 
@@ -20,41 +19,46 @@ exports.getEvents = asyncHandler(async (req, res, next) => {
     if (endDate)   filter.date.$lte = new Date(endDate);
   }
 
-  // search query
   if (search) {
     filter.$or = [
-      { title: { $regex: search, $options: 'i' } },
+      { title:       { $regex: search, $options: 'i' } },
       { description: { $regex: search, $options: 'i' } },
     ];
   }
 
   // sorting
-  let sortOption = { createdAt: -1 };
-  if (sort === 'date') sortOption = { date: 1 };
-  else if (sort === '-date') sortOption = { date: -1 };
-  else if (sort === 'popularity') sortOption = { registeredCount: -1 };
+  const allowedSortFields = ['date', 'registrations'];
+  const sortField = allowedSortFields.includes(sortBy) ? sortBy : 'date';
+  const sortDirection = order === 'desc' ? -1 : 1;
 
-  // pagination
-  const pageNum = parseInt(page, 10) || 1;
+  const actualSortField = sortField === 'registrations' ? 'registeredCount' : sortField;
+  const sort = { [actualSortField]: sortDirection };
+
+  // pagination calc
+  const pageNum  = parseInt(page, 10)  || 1;
   const limitNum = parseInt(limit, 10) || 10;
-  const startIndex = (pageNum - 1) * limitNum;
+  const skip     = (pageNum - 1) * limitNum;
 
-  const total = await Event.countDocuments(filter);
+  // execute db queries
+  const [data, total] = await Promise.all([
+    Event.find(filter)
+      .populate('category', 'name')
+      .populate('organizer', 'name email')
+      .sort(sort)
+      .skip(skip)
+      .limit(limitNum),
+    Event.countDocuments(filter),
+  ]);
 
-  const events = await Event.find(filter)
-    .populate('category', 'name')
-    .populate('organizer', 'name email')
-    .sort(sortOption)
-    .skip(startIndex)
-    .limit(limitNum);
+  const totalPages = Math.ceil(total / limitNum) || 1;
 
   res.status(200).json({
     status: 'success',
-    count: events.length,
     total,
-    currentPage: pageNum,
-    totalPages: Math.ceil(total / limitNum) || 1,
-    data: events,
+    page: pageNum,
+    limit: limitNum,
+    totalPages,
+    data,
   });
 });
 
@@ -63,8 +67,8 @@ exports.getEvents = asyncHandler(async (req, res, next) => {
 // @access  public
 exports.getEventById = asyncHandler(async (req, res, next) => {
   const event = await Event.findById(req.params.id)
-    .populate('category', 'name description')
-    .populate('organizer', 'name email');
+    .populate('category')
+    .populate('organizer');
 
   if (!event) {
     return next(new AppError('Event not found', 404));
