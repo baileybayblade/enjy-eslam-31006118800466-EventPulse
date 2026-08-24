@@ -1,110 +1,115 @@
 const Event = require('../models/Event');
+const AppError = require('../utils/appError');
+const asyncHandler = require('../utils/asyncHandler');
 
 // @desc    get all events with filtering, pagination, sorting, and search
 // @route   GET /api/events
-exports.getEvents = async (req, res, next) => {
-  try {
-    const { category, city, startDate, endDate, search, sort, page, limit } = req.query;
+// @access  public
+exports.getEvents = asyncHandler(async (req, res, next) => {
+  const { category, city, startDate, endDate, search, sort, page, limit } = req.query;
 
-    let query = {};
+  let query = {};
 
-    // ...text search across name/title and description
-    if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-      ];
-    }
-
-    // ...existing category & city filters
-    if (category) {
-      query.category = category;
-    }
-
-    if (city) {
-      query.city = { $regex: city, $options: 'i' };
-    }
-
-    // ...date range filter
-    if (startDate || endDate) {
-      query.date = {};
-      if (startDate) query.date.$gte = new Date(startDate);
-      if (endDate) query.date.$lte = new Date(endDate);
-    }
-
-    // ...sorting logic
-    let sortOption = {};
-    if (sort === 'date') {
-      sortOption = { date: 1 };
-    } else if (sort === '-date') {
-      sortOption = { date: -1 };
-    } else if (sort === 'popularity') {
-      // sorts by registered attendees count descending
-      sortOption = { registeredCount: -1 }; 
-    } else {
-      sortOption = { createdAt: -1 };
-    }
-
-    // ...pagination setup
-    const pageNum = parseInt(page, 10) || 1;
-    const limitNum = parseInt(limit, 10) || 10;
-    const startIndex = (pageNum - 1) * limitNum;
-
-    //gGet total count matching query (for metadata)
-    const total = await Event.countDocuments(query);
-
-    // execute paginated query
-    const events = await Event.find(query)
-      .populate('category')
-      .sort(sortOption)
-      .skip(startIndex)
-      .limit(limitNum);
-
-    // ...response with required metadata
-    res.status(200).json({
-      success: true,
-      count: events.length,
-      total,
-      currentPage: pageNum,
-      totalPages: Math.ceil(total / limitNum) || 1,
-      data: events, // returns [] (empty list) if no match found
-    });
-  } catch (error) {
-    next(error);
+  // text search
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { description: { $regex: search, $options: 'i' } },
+    ];
   }
-};
 
-// @desc    Create a new event
+  // category & city filters
+  if (category) query.category = category;
+  if (city) query.city = { $regex: city, $options: 'i' };
+
+  // date range filter
+  if (startDate || endDate) {
+    query.date = {};
+    if (startDate) query.date.$gte = new Date(startDate);
+    if (endDate) query.date.$lte = new Date(endDate);
+  }
+
+  // Sorting
+  let sortOption = { createdAt: -1 };
+  if (sort === 'date') sortOption = { date: 1 };
+  else if (sort === '-date') sortOption = { date: -1 };
+  else if (sort === 'popularity') sortOption = { registeredCount: -1 };
+
+  // Pagination
+  const pageNum = parseInt(page, 10) || 1;
+  const limitNum = parseInt(limit, 10) || 10;
+  const startIndex = (pageNum - 1) * limitNum;
+
+  const total = await Event.countDocuments(query);
+
+  const events = await Event.find(query)
+    .populate('category', 'name')
+    .populate('organizer', 'name email')
+    .sort(sortOption)
+    .skip(startIndex)
+    .limit(limitNum);
+
+  res.status(200).json({
+    status: 'success',
+    count: events.length,
+    total,
+    currentPage: pageNum,
+    totalPages: Math.ceil(total / limitNum) || 1,
+    data: events,
+  });
+});
+
+// @desc    get single event by ID
+// @route   GET /api/events/:id
+// @access  public
+exports.getEventById = asyncHandler(async (req, res, next) => {
+  const event = await Event.findById(req.params.id)
+    .populate('category', 'name description')
+    .populate('organizer', 'name email');
+
+  if (!event) {
+    return next(new AppError('Event not found', 404));
+  }
+
+  res.status(200).json({ status: 'success', data: event });
+});
+
+// @desc    create a new event
 // @route   POST /api/events
-exports.createEvent = async (req, res, next) => {
-  try {
-    const event = await Event.create(req.body);
-    res.status(201).json({ success: true, data: event });
-  } catch (error) {
-    next(error);
-  }
-};
+// @access  private/admin
+exports.createEvent = asyncHandler(async (req, res, next) => {
+  req.body.organizer = req.user.userId;
 
-// @desc    Update an event
+  const event = await Event.create(req.body);
+
+  res.status(201).json({ status: 'success', data: event });
+});
+
+// @desc    update an event
 // @route   PATCH /api/events/:id
-exports.updateEvent = async (req, res, next) => {
-  try {
-    const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    res.status(200).json({ success: true, data: event });
-  } catch (error) {
-    next(error);
-  }
-};
+// @access  private/admin
+exports.updateEvent = asyncHandler(async (req, res, next) => {
+  const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-exports.createEvent = async (req, res, next) => {
-  try {
-    req.body.organizer = req.user.id; // organizer thing
-    const event = await Event.create(req.body);
-    res.status(201).json({ success: true, data: event });
-  } catch (error) {
-    next(error);
+  if (!event) {
+    return next(new AppError('Event not found', 404));
   }
-};
+
+  res.status(200).json({ status: 'success', data: event });
+});
+
+// @desc    delete an event
+// @route   DELETE /api/events/:id
+// @access  private/admin
+exports.deleteEvent = asyncHandler(async (req, res, next) => {
+  const event = await Event.findByIdAndDelete(req.params.id);
+
+  if (!event) {
+    return next(new AppError('Event not found', 404));
+  }
+
+  res.status(200).json({ status: 'success', data: null });
+});
