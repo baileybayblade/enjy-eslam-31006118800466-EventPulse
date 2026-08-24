@@ -27,9 +27,9 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log(`Socket connected: ${socket.id}`);
 
-  socket.on('joinEventRoom', (eventId) => {
-    socket.join(`event_${eventId}`);
-    console.log(`Socket ${socket.id} joined room event_${eventId}`);
+  socket.on('join-event', (eventId) => {
+    socket.join(eventId);
+    console.log(`Socket ${socket.id} joined room: ${eventId}`);
   });
 
   socket.on('disconnect', () => {
