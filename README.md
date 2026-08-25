@@ -67,4 +67,4 @@ Firstly, don't forget to enable the provided environment: **"EventPulse Dev"**. 
 | POST | `{{baseUrl}}/api/auth/login` | Login registered user |
 | POST | `{{baseUrl}}/api/auth/register` | Login admin user (Uses `{{adminToken}}`) |
 
-Raw Vercel URL: https://enjy-eslam-student-id-event-pulse.vercel.app/
+Raw Vercel URL: https://enjy-eslam-31006118800466-event-pulse.vercel.app/
