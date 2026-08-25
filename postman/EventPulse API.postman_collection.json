@@ -1,0 +1,2001 @@
+{
+  "info": {
+    "_postman_id": "3c8c974c-29d4-478e-ab84-a98761391c2d",
+    "name": "EventPulse API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55894389",
+    "_collection_link": "https://go.postman.co/collection/55894389-3c8c974c-29d4-478e-ab84-a98761391c2d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Jane Doe\",\r\n  \"email\": \"jane@example.com\",\r\n  \"password\": \"Password123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Register user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Alex Doe\",\r\n  \"email\": \"alex@example.com\",\r\n  \"password\": \"Password123!\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "335"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14f-DmqNQVjiWqNU4jZrzquUckYHtH0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:01:39 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"success\",\n    \"token\": \"mock_jwt_token_sample\",\n    \"data\": {\n        \"id\": \"6a8d9233e222854f6472951c\",\n        \"name\": \"Alex Doe\",\n        \"email\": \"alex@example.com\",\n        \"role\": \"attendee\"\n    }\n}"
+            },
+            {
+              "name": "Register attempt with pre-existing email",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Alex Doe\",\r\n  \"email\": \"alex@example.com\",\r\n  \"password\": \"Password1232\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "295"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"127-xeU8B5+98bL5liEtCs3gCT25L9A\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:17:50 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Email is already registered\",\n    \"stack\": \"Error: Email is already registered\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\auth.controller.js:25:17\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\"\n}"
+            },
+            {
+              "name": "Register with an invalid field",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Alex Doe\",\r\n  \"password\": \"Password123!\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "804"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"324-Jf/YG2TKtwwOYz5q5IyJxf+hvBw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:49:19 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Email address is required\",\n    \"stack\": \"ValidationError: User validation failed: email: Email address is required\\n    at model.validate (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\mongoose\\\\lib\\\\document.js:2944:36)\\n    at async model.$__save (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\mongoose\\\\lib\\\\model.js:399:7)\\n    at async maybeTracedSave (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\mongoose\\\\lib\\\\model.js:676:7)\\n    at async model.create (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\mongoose\\\\lib\\\\model.js:2764:5)\\n    at async C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\auth.controller.js:32:16\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Register admin user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Admin Doe\",\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Register admin user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Admin Doe\",\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"admin\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "330"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14a-A98MhDxgyluXz5kOSfBs93vvDjk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:44:35 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"success\",\n    \"token\": \"mock_jwt_token_sample\",\n    \"data\": {\n        \"id\": \"6a8d9c43e222854f6472951e\",\n        \"name\": \"Admin Doe\",\n        \"email\": \"admin@example.com\",\n        \"role\": \"admin\"\n    }\n}"
+            },
+            {
+              "name": "Register admin with same email",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Admin Doe\",\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"admin\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "295"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"127-xeU8B5+98bL5liEtCs3gCT25L9A\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:45:17 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Email is already registered\",\n    \"stack\": \"Error: Email is already registered\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\auth.controller.js:25:17\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login registered user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Jane Doe\",\r\n  \"email\": \"jane@example.com\",\r\n  \"password\": \"Password123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login registered user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Alex Doe\",\r\n  \"email\": \"alex@example.com\",\r\n  \"password\": \"Password123!\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "335"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14f-Xq1+Dn6eKRvty41RJqh0jNXKBtc\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:01:56 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"success\",\n    \"token\": \"mock_jwt_token_sample\",\n    \"data\": {\n        \"id\": \"6a8d9233e222854f6472951c\",\n        \"name\": \"Alex Doe\",\n        \"email\": \"alex@example.com\",\n        \"role\": \"attendee\"\n    }\n}"
+            },
+            {
+              "name": "Login registered user (invalid field)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Alex Doe\",\r\n  \"email\": \"alex@example.com\",\r\n  \"password\": \"Password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "207"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"cf-XhbyrUH29QvwX2g+4ACSFkDYkYY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:16:21 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Invalid email or password\",\n    \"stack\": \"Error: Invalid email or password\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\auth.controller.js:74:17\"\n}"
+            },
+            {
+              "name": "Missing field login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Alex Doe\",\r\n  \"email\": \"alex@example.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1312"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"520-kra0+RT5FbJx+XTxE5ikVLh4gvU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:22:50 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Please provide email and password\",\n    \"stack\": \"Error: Please provide email and password\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\auth.controller.js:62:17\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\utils\\\\asyncHandler.js:3:19\\n    at Layer.handleRequest (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at next (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\route.js:157:13)\\n    at Route.dispatch (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\route.js:117:3)\\n    at handle (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:435:11)\\n    at Layer.handleRequest (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:295:15\\n    at processParams (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:582:12)\\n    at next (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:291:5)\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login registered admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Admin Doe\",\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"Password123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login registered admin",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Admin Doe\",\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"Password123!\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "330"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14a-jgbioWgTVEVDFlcWKWrD0e/J7Ug\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:50:09 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"success\",\n    \"token\": \"mock_jwt_token_sample\",\n    \"data\": {\n        \"id\": \"6a8d9c43e222854f6472951e\",\n        \"name\": \"Admin Doe\",\n        \"email\": \"admin@example.com\",\n        \"role\": \"admin\"\n    }\n}"
+            },
+            {
+              "name": "Login registered admin (invalid field)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Admin Doe\",\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"Password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "207"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"cf-XhbyrUH29QvwX2g+4ACSFkDYkYY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:51:01 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Invalid email or password\",\n    \"stack\": \"Error: Invalid email or password\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\auth.controller.js:74:17\"\n}"
+            },
+            {
+              "name": "Missing field login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Admin Doe\",\r\n  \"email\": \"admin@example.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1312"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"520-kra0+RT5FbJx+XTxE5ikVLh4gvU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:51:30 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Please provide email and password\",\n    \"stack\": \"Error: Please provide email and password\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\auth.controller.js:62:17\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\utils\\\\asyncHandler.js:3:19\\n    at Layer.handleRequest (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at next (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\route.js:157:13)\\n    at Route.dispatch (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\route.js:117:3)\\n    at handle (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:435:11)\\n    at Layer.handleRequest (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:295:15\\n    at processParams (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:582:12)\\n    at next (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:291:5)\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get all events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get all events",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1144"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"478-K7ZrydNBsdEIgCP86VUU8qZj0RA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 12:45:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"results\": 2,\n    \"total\": 2,\n    \"data\": [\n        {\n            \"_id\": \"6a86fa6d4f51df0e4b67e442\",\n            \"title\": \"Indie Rock Night\",\n            \"description\": \"An evening featuring live performances by emerging indie bands.\",\n            \"city\": \"Alexandria\",\n            \"date\": \"2026-10-20T19:00:00.000Z\",\n            \"capacity\": 80,\n            \"registeredCount\": 0,\n            \"category\": {\n                \"_id\": \"6a86fa6d4f51df0e4b67e43f\",\n                \"name\": \"Music\",\n                \"description\": \"Live concerts & festivals\",\n                \"__v\": 0,\n                \"createdAt\": \"2026-08-20T13:00:29.003Z\",\n                \"updatedAt\": \"2026-08-20T13:00:29.003Z\"\n            },\n            \"createdBy\": \"6a86fa6c4f51df0e4b67e43d\",\n            \"__v\": 0,\n            \"createdAt\": \"2026-08-20T13:00:29.075Z\",\n            \"updatedAt\": \"2026-08-20T13:00:29.075Z\"\n        },\n        {\n            \"_id\": \"6a86fa6d4f51df0e4b67e441\",\n            \"title\": \"Global Tech Summit 2026\",\n            \"description\": \"Explore the future of backend development and AI systems.\",\n            \"city\": \"Cairo\",\n            \"date\": \"2026-11-15T09:00:00.000Z\",\n            \"capacity\": 150,\n            \"registeredCount\": 0,\n            \"category\": {\n                \"_id\": \"6a86fa6d4f51df0e4b67e43e\",\n                \"name\": \"Technology\",\n                \"description\": \"Tech conferences & workshops\",\n                \"__v\": 0,\n                \"createdAt\": \"2026-08-20T13:00:29.003Z\",\n                \"updatedAt\": \"2026-08-20T13:00:29.003Z\"\n            },\n            \"createdBy\": \"6a86fa6c4f51df0e4b67e43d\",\n            \"__v\": 0,\n            \"createdAt\": \"2026-08-20T13:00:29.075Z\",\n            \"updatedAt\": \"2026-08-20T13:00:29.075Z\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create events (vith login)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create events without login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1354"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"54a-KMxWtyV+Wrfh+qjbj8vL0VC7DAw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:38:26 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"You must be logged in to access this route\",\n    \"stack\": \"Error: You must be logged in to access this route\\n    at requireAuth (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\middleware\\\\requireAuth.js:8:17)\\n    at Layer.handleRequest (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at trimPrefix (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:342:13)\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:297:9\\n    at processParams (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:582:12)\\n    at next (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:291:5)\\n    at router.handle (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:186:3)\\n    at router (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:60:12)\\n    at Layer.handleRequest (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\lib\\\\layer.js:152:17)\\n    at trimPrefix (C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\node_modules\\\\router\\\\index.js:342:13)\"\n}"
+            },
+            {
+              "name": "Get events as attendee (non-admin)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "81"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"51-XAd5DqMw/lFPuLYQv6o1SrDh1VU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:41:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Forbidden: Insufficient permissions for this action\"\n}"
+            },
+            {
+              "name": "Get events as admin",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "378"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"17a-ubl5c/wbaKJDy69k5AlumY5BetA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 13:55:38 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"title\": \"Tech Conference 2026\",\n        \"description\": \"Annual web dev summit\",\n        \"category\": \"64f012345678901234567890\",\n        \"date\": \"2026-10-15T10:00:00.000Z\",\n        \"city\": \"Cairo\",\n        \"venue\": \"Main Hall\",\n        \"capacity\": 100,\n        \"organizer\": \"6a8d9c43e222854f6472951e\",\n        \"_id\": \"6a8d9edae222854f64729520\",\n        \"createdAt\": \"2026-08-25T13:55:38.734Z\",\n        \"updatedAt\": \"2026-08-25T13:55:38.734Z\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Event capacity",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 1,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"event\": \"6a8d9edae222854f64729520\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Event with unfilled capacity (See: \"capacity: 1\")",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 1,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"event\": \"6a8d9edae222854f64729520\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "376"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"178-MtVCWobzieE7BClUyYw71IUV6zY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:24:35 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"title\": \"Tech Conference 2026\",\n        \"description\": \"Annual web dev summit\",\n        \"category\": \"64f012345678901234567890\",\n        \"date\": \"2026-10-15T10:00:00.000Z\",\n        \"city\": \"Cairo\",\n        \"venue\": \"Main Hall\",\n        \"capacity\": 1,\n        \"organizer\": \"6a8d9c43e222854f6472951e\",\n        \"_id\": \"6a8dcfd3a401cac62a711251\",\n        \"createdAt\": \"2026-08-25T17:24:35.828Z\",\n        \"updatedAt\": \"2026-08-25T17:24:35.828Z\",\n        \"__v\": 0\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Registrations",
+      "item": [
+        {
+          "name": "Register event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{attendeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"event\": \"123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Register event",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"event\": \"6a8d9edae222854f64729520\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/registrations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "registrations"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "221"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"dd-fPLORl9ALzNCX1fBwuvSmG8pk0k\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:10:29 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"event\": \"6a8d9edae222854f64729520\",\n        \"attendee\": \"6a8d9233e222854f6472951c\",\n        \"_id\": \"6a8dcc855f26bbf0ab00f210\",\n        \"createdAt\": \"2026-08-25T17:10:29.117Z\",\n        \"updatedAt\": \"2026-08-25T17:10:29.117Z\",\n        \"__v\": 0\n    }\n}"
+            },
+            {
+              "name": "Duplicate registration/if already registered for an event",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"event\": \"6a8d9edae222854f64729520\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/registrations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "registrations"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "332"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14c-CVqfzNcXX44LxPsWOp80owzJVJA\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:21:22 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"You are already registered for this event\",\n    \"stack\": \"Error: You are already registered for this event\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\registrations.controller.js:25:17\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\"\n}"
+            },
+            {
+              "name": "Attempting to enter event while it's full",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"event\": \"6a8dcfd3a401cac62a711251\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/registrations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "registrations"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "286"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"11e-/zLvGjktnQbz5dRsVQCKt+O//ps\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:35:15 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"This event is full\",\n    \"stack\": \"Error: This event is full\\n    at C:\\\\Users\\\\enjye\\\\OneDrive\\\\Desktop\\\\another_semester_project\\\\controllers\\\\registrations.controller.js:31:17\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\"\n}"
+            },
+            {
+              "name": "422 error from invalid event",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"event\": \"123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/registrations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "registrations"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "118"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"76-WOCCPxTJ9jvsQ/ql0jR52ATcH0A\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:54:00 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"fail\",\n    \"message\": \"Validation failed\",\n    \"errors\": [\n        {\n            \"field\": \"event\",\n            \"message\": \"event must be a valid MongoId\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get user's registered events",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{attendeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations",
+                "my"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get user's registered events",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/registrations/my",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "registrations",
+                    "my"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "557"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"22d-wl4ZzozrYCkwGZjP4GjfYKkhc7o\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:14:35 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"count\": 1,\n    \"data\": [\n        {\n            \"_id\": \"6a8dcc855f26bbf0ab00f210\",\n            \"event\": {\n                \"_id\": \"6a8d9edae222854f64729520\",\n                \"title\": \"Tech Conference 2026\",\n                \"description\": \"Annual web dev summit\",\n                \"category\": \"64f012345678901234567890\",\n                \"date\": \"2026-10-15T10:00:00.000Z\",\n                \"city\": \"Cairo\",\n                \"venue\": \"Main Hall\",\n                \"capacity\": 100,\n                \"organizer\": \"6a8d9c43e222854f6472951e\",\n                \"createdAt\": \"2026-08-25T13:55:38.734Z\",\n                \"updatedAt\": \"2026-08-25T17:10:29.182Z\",\n                \"__v\": 0\n            },\n            \"attendee\": \"6a8d9233e222854f6472951c\",\n            \"createdAt\": \"2026-08-25T17:10:29.117Z\",\n            \"updatedAt\": \"2026-08-25T17:10:29.117Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Cancel event registration",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{attendeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a8dcc855f26bbf0ab00f210"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Cancel event registration",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/registrations/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "registrations",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6a8dcc855f26bbf0ab00f210"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "68"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"44-S/6EC9O+MYi2pmoieNIpvsKn7OQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:20:12 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Registration cancelled successfully\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Announcements",
+      "item": [
+        {
+          "name": "Get all announcements in specific event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{attendeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/announcements/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "announcements",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": "6a8d9edae222854f64729520"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get all announcements in specific event",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/announcements/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "announcements",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "eventId",
+                      "value": "6a8d9edae222854f64729520"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "579"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"243-AJeGE2gGfrq/OU0c5d2eifW0UOQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:52:13 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"count\": 2,\n    \"data\": [\n        {\n            \"_id\": \"6a8dd472a401cac62a711257\",\n            \"event\": \"6a8d9edae222854f64729520\",\n            \"sender\": {\n                \"_id\": \"6a8d9c43e222854f6472951e\",\n                \"name\": \"Admin Doe\",\n                \"email\": \"admin@example.com\"\n            },\n            \"text\": \"Hello, World!\",\n            \"createdAt\": \"2026-08-25T17:44:18.034Z\",\n            \"updatedAt\": \"2026-08-25T17:44:18.034Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6a8dd645a401cac62a711258\",\n            \"event\": \"6a8d9edae222854f64729520\",\n            \"sender\": {\n                \"_id\": \"6a8d9c43e222854f6472951e\",\n                \"name\": \"Admin Doe\",\n                \"email\": \"admin@example.com\"\n            },\n            \"text\": \"Hello, World!\",\n            \"createdAt\": \"2026-08-25T17:52:05.646Z\",\n            \"updatedAt\": \"2026-08-25T17:52:05.646Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create announcement",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"eventId\": \"6a8d9edae222854f64729520\",\r\n  \"text\": \"Hello, World!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/announcements",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "announcements"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create announcement",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"eventId\": \"6a8d9edae222854f64729520\",\r\n  \"text\": \"Hello, World!\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/announcements",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "announcements"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "297"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"129-joE3k7TI/UYKa2+5Fhen9sFZ9cw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 17:44:18 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"event\": \"6a8d9edae222854f64729520\",\n        \"sender\": {\n            \"_id\": \"6a8d9c43e222854f6472951e\",\n            \"name\": \"Admin Doe\",\n            \"email\": \"admin@example.com\"\n        },\n        \"text\": \"Hello, World!\",\n        \"_id\": \"6a8dd472a401cac62a711257\",\n        \"createdAt\": \"2026-08-25T17:44:18.034Z\",\n        \"updatedAt\": \"2026-08-25T17:44:18.034Z\",\n        \"__v\": 0\n    }\n}"
+            },
+            {
+              "name": "Creating announcement without proper authentication (user)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Tech Conference 2026\",\r\n  \"description\": \"Annual web dev summit\",\r\n  \"city\": \"Cairo\",\r\n  \"venue\": \"Main Hall\",\r\n  \"capacity\": 100,\r\n  \"date\": \"2026-10-15T10:00:00.000Z\",\r\n  \"category\": \"64f012345678901234567890\",\r\n  \"eventId\": \"6a8d9edae222854f64729520\",\r\n  \"text\": \"Hello, World!\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/announcements",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "announcements"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "81"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"51-XAd5DqMw/lFPuLYQv6o1SrDh1VU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 25 Aug 2026 19:36:13 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Forbidden: Insufficient permissions for this action\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
