@@ -19,13 +19,13 @@ const generateToken = (userId, role) => {
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, password, role } = req.body;
 
-  // 1. check if email is already registered
+  // check if email is already registered
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return next(new AppError('Email is already registered', 400));
   }
 
-  // 2. hash password
+  // hash password
   const hashedPassword = await bcrypt.hash(password, 12);
 
   // create user
@@ -33,7 +33,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     name,
     email,
     password: hashedPassword,
-    role: role || 'user',
+    role: role || 'attendee',
   });
 
   // generate JWT
