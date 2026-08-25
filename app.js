@@ -13,6 +13,19 @@ const connectDB = require('./config/db');
 
 const app = express();
 
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
+const SWAGGER_OPTIONS = {
+  customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui.min.css',
+  customJs: [
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-bundle.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-standalone-preset.js',
+  ],
+};
+
 // middleware 4 express
 app.use(morgan('dev'));
 app.use(express.json());
@@ -53,7 +66,7 @@ app.get('/health', (req, res) => {
 });
 
 // swagger doc
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, SWAGGER_OPTIONS));
 
 // api routes
 app.use('/api/auth', authRoutes);
