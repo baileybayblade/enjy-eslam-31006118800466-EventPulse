@@ -16,7 +16,11 @@ const app = express();
 // middleware 4 express
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(mongoSanitize());
+app.use((req, res, next) => {
+  if (req.body) mongoSanitize.sanitize(req.body);
+  if (req.params) mongoSanitize.sanitize(req.params);
+  next();
+});
 
 // http & socket.io server setup
 const server = http.createServer(app);
@@ -65,20 +69,20 @@ app.use((req, res, next) => {
 // global error handler
 app.use(errorHandler);
 
-// async start function thing
-async function start() {
-  try {
-    await connectDB();
-    const PORT = process.env.PORT || 3000;
-    server.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+if (process.env.NODE_ENV !== 'test') {
+  async function start() {
+    try {
+      await connectDB();
+      const PORT = process.env.PORT || 3000;
+      server.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+      });
+    } catch (error) {
+      console.error('Failed to start server:', error);
+      process.exit(1);
+    }
   }
+  start();
 }
-
-start();
 
 module.exports = app;

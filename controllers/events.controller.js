@@ -6,59 +6,51 @@ const asyncHandler = require('../utils/asyncHandler');
 // @route   GET /api/events
 // @access  public
 exports.getEvents = asyncHandler(async (req, res, next) => {
-  const { category, city, startDate, endDate, search, sortBy, order, page, limit } = req.query;
+  // destructure directly from req.query without reassigning req.query itself (due to previous supertest/jest errors)
+  const { category, city, startDate, endDate, search, sortBy, order, page = 1, limit = 10 } = req.query;
 
-  // filtering
-  const filter = {};
-  if (category) filter.category = category;
-  if (city) filter.city = city;
+  const query = {};
+
+  if (category) query.category = category;
+  if (city) query.city = city;
 
   if (startDate || endDate) {
-    filter.date = {};
-    if (startDate) filter.date.$gte = new Date(startDate);
-    if (endDate)   filter.date.$lte = new Date(endDate);
+    query.date = {};
+    if (startDate) query.date.$gte = new Date(startDate);
+    if (endDate)   query.date.$lte = new Date(endDate);
   }
 
   if (search) {
-    filter.$or = [
-      { title:       { $regex: search, $options: 'i' } },
+    query.$or = [
+      { title: { $regex: search, $options: 'i' } },
       { description: { $regex: search, $options: 'i' } },
     ];
   }
 
-  // sorting
+  // sorting & pagination
   const allowedSortFields = ['date', 'registrations'];
   const sortField = allowedSortFields.includes(sortBy) ? sortBy : 'date';
   const sortDirection = order === 'desc' ? -1 : 1;
-
   const actualSortField = sortField === 'registrations' ? 'registeredCount' : sortField;
   const sort = { [actualSortField]: sortDirection };
 
-  // pagination calc
   const pageNum  = parseInt(page, 10)  || 1;
   const limitNum = parseInt(limit, 10) || 10;
   const skip     = (pageNum - 1) * limitNum;
 
-  // execute db queries
-  const [data, total] = await Promise.all([
-    Event.find(filter)
-      .populate('category', 'name')
-      .populate('organizer', 'name email')
-      .sort(sort)
+  const events = await Event.find(query)
+      .populate('category')
+      .sort({ [sortBy || 'date']: order === 'desc' ? -1 : 1 })
       .skip(skip)
-      .limit(limitNum),
-    Event.countDocuments(filter),
-  ]);
+      .limit(limitNum);
 
-  const totalPages = Math.ceil(total / limitNum) || 1;
+    const total = await Event.countDocuments(query);
 
-  res.status(200).json({
-    status: 'success',
-    total,
-    page: pageNum,
-    limit: limitNum,
-    totalPages,
-    data,
+    res.status(200).json({
+      status: 'success',
+      results: events.length,
+      total,
+      data: events,
   });
 });
 

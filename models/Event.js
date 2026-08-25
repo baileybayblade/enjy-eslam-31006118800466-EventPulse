@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+require('./Category');
+require('./User');
 
 const eventSchema = new mongoose.Schema(
   {
