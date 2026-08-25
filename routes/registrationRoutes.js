@@ -17,4 +17,9 @@ router.post(
   registrationController.registerForEvent
 );
 
+router.get('/my', registrationController.getMyRegistrations);
+
+router.delete('/:id', registrationController.cancelRegistration);
+
+
 module.exports = router;
