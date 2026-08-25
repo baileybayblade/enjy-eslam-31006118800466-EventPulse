@@ -24,7 +24,7 @@ const SWAGGER_OPTIONS = {
     'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-bundle.js',
     'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-standalone-preset.js',
   ],
-};
+}; // Added this so it doesn't look blank. I know it's not necessary, but I didn't like the pure white page!
 
 // middleware 4 express
 app.use(morgan('dev'));
