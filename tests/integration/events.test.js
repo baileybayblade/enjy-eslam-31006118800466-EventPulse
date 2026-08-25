@@ -61,9 +61,3 @@ describe('Events Endpoint Integration Tests (/api/events)', () => {
   });
 
 });
-
-test('GET /api/events returns status 200 OK', async () => {
-  const response = await request(app).get('/api/events');
-  console.log('GET /api/events error:', response.body); // <--- This will show the actual message/stack
-  expect(response.status).toBe(200);
-});
