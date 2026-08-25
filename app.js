@@ -72,6 +72,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, SWAGGER_O
 app.use('/api/auth', authRoutes);
 app.use('/api/events', require('./routes/eventRoutes'));
 app.use('/api/announcements', require('./routes/announcementRoutes'));
+app.use('/api/registrations', require('./routes/registrationRoutes'));
 // app.use('/api/messages', require('./routes/messageRoutes'));
 
 // 404 handler
