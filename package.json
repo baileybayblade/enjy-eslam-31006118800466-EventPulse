@@ -23,6 +23,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "jest --runInBand --detectOpenHandles",
+    "seed": "node seeder.js",
     "seed:import": "node seeder.js",
     "seed:destroy": "node seeder.js -d"
   }

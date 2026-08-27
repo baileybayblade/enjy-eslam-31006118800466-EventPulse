@@ -39,19 +39,21 @@ const importData = async () => {
         title: 'Global Tech Summit 2026',
         description: 'Explore the future of backend development and AI systems.',
         city: 'Cairo',
+        venue: 'Cairo Convention Center',
         date: new Date('2026-11-15T09:00:00Z'),
         capacity: 150,
         category: categories[0]._id,
-        createdBy: admin._id,
+        organizer: admin._id,
       },
       {
         title: 'Indie Rock Night',
         description: 'An evening featuring live performances by emerging indie bands.',
         city: 'Alexandria',
+        venue: 'Alexandria Hall',
         date: new Date('2026-10-20T19:00:00Z'),
         capacity: 80,
         category: categories[1]._id,
-        createdBy: admin._id,
+        organizer: admin._id,
       },
     ]);
 
